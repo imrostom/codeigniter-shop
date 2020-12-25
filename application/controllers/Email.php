@@ -6,16 +6,18 @@
  * and open the template in the editor.
  */
 
-class Email extends CI_Controller {
+class Email extends CI_Controller
+{
 
-    public function index() {
-        $config['protocol'] = 'smtp';
+    public function index()
+    {
+        $config['protocol']  = 'smtp';
         $config['smtp_host'] = 'mail.imrostom.com';
         $config['smtp_port'] = 587;
         $config['smtp_user'] = 'imrostom@imrostom.com';
         $config['smtp_pass'] = 'imrostomali';
 
-        // Load email library and passing configured values to email library 
+        // Load email library and passing configured values to email library
         $this->load->library('email', $config);
         $this->email->set_newline("\r\n");
 
