@@ -35,8 +35,32 @@ class Web extends CI_Controller
 
     public function product()
     {
+        $this->load->library('pagination');
+
+        $config['base_url'] = base_url('web/product');
+        $config['total_rows'] = $this->db->get('tbl_product')->num_rows();
+        $config['per_page'] = 8;
+        $config['num_links'] = 2;
+        $config['full_tag_open'] = '<ul>';
+        $config['full_tag_close'] = '</ul>';
+        $config['first_link'] = false;
+        $config['last_link'] = false;
+        $config['prev_link'] = '&lt; Previous';
+        $config['prev_tag_open'] = '<li>';
+        $config['prev_tag_close'] = '</li>';
+        $config['last_link'] = false;
+        $config['next_link'] = 'Next &gt;';
+        $config['next_tag_open'] = '<li>';
+        $config['next_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li>';
+        $config['num_tag_close'] = '</li>';
+        $config['cur_tag_open'] = '<li class="active"><a>';
+        $config['cur_tag_close'] = '</a></li>';
+
+        $this->pagination->initialize($config);
+
         $data                    = array();
-        $data['get_all_product'] = $this->web_model->get_all_product();
+        $data['get_all_product'] = $this->web_model->get_all_product_pagi($config['per_page'], $this->uri->segment('3'));
         $this->load->view('web/inc/header');
         $this->load->view('web/pages/product', $data);
         $this->load->view('web/inc/footer');

@@ -42,6 +42,19 @@ class Web_Model extends CI_Model
         return $info->result();
     }
 
+    public function get_all_product_pagi($limit,$offset)
+    {
+        $this->db->select('*');
+        $this->db->from('tbl_product');
+        $this->db->join('tbl_category', 'tbl_category.id=tbl_product.product_category');
+        $this->db->join('tbl_brand', 'tbl_brand.brand_id=tbl_product.product_brand');
+        $this->db->order_by('tbl_product.product_id', 'DESC');
+        $this->db->where('tbl_product.publication_status', 1);
+        $this->db->limit($limit,$offset);
+        $info = $this->db->get();
+        return $info->result();
+    }
+
     public function get_single_product($id)
     {
         $this->db->select('*');
